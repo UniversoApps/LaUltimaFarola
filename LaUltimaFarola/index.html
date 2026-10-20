@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>La última farola</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="description" content="Un juego de plataformas sobre una niña, su abuela y una ciudad que se apaga. Jugalo en el navegador o instalalo en tu teléfono.">
+<meta name="theme-color" content="#05071a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="La última farola">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Patrick+Hand&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <div id="frame">
+    <canvas id="screen" width="480" height="270" aria-label="La última farola"></canvas>
+
+    <div id="title-logo">
+      <h1>La última <em>farola</em></h1>
+      <p>Una historia de luz y memoria</p>
+    </div>
+
+    <div id="titlecard" hidden><span class="num"></span><span class="name"></span></div>
+    <div id="hint" hidden></div>
+    <div id="bark" hidden><b></b><span></span></div>
+    <div id="caption" hidden></div>
+    <div id="toast" hidden></div>
+    <div id="cardtoast" hidden><b></b><span></span></div>
+
+    <div id="dialog" hidden role="dialog" aria-live="polite">
+      <div class="who"></div>
+      <div class="text"></div>
+      <div class="more" aria-hidden="true">▾</div>
+    </div>
+
+    <div id="memory" hidden role="dialog" aria-live="polite">
+      <div class="label">Recuerdo</div>
+      <h3></h3>
+      <canvas width="140" height="64"></canvas>
+      <p></p>
+      <div class="more">Continuar ▸</div>
+    </div>
+
+    <div id="menus" hidden>
+      <section id="m-title" class="screen" hidden>
+        <nav class="list">
+          <button class="mi" id="b-continue">Continuar</button>
+          <button class="mi" id="b-new">Comenzar</button>
+          <button class="mi" id="b-chapters">Capítulos</button>
+          <button class="mi" id="b-album">Álbum de postales</button>
+          <button class="mi" id="b-options">Opciones</button>
+          <button class="mi" id="b-install">Instalar en el dispositivo</button>
+        </nav>
+        <footer>UniversoApps · teclado, mando o pantalla táctil</footer>
+      </section>
+
+      <section id="m-chapters" class="screen panel" hidden>
+        <h2>Capítulos</h2>
+        <div id="chapter-list" class="list"></div>
+        <button class="mi wide" id="b-chap-back">Volver</button>
+      </section>
+
+      <section id="m-album" class="screen panel" hidden>
+        <h2>Álbum de postales</h2>
+        <div class="album">
+          <div id="album-grid" class="grid"></div>
+          <aside id="album-detail"><h4></h4><p></p></aside>
+        </div>
+      </section>
+
+      <section id="m-options" class="screen panel" hidden>
+        <h2>Opciones</h2>
+        <div id="options-list" class="list"></div>
+      </section>
+
+      <section id="m-pause" class="screen panel narrow" hidden>
+        <h2>Pausa</h2>
+        <p id="pause-info" class="sub"></p>
+        <nav class="list">
+          <button class="mi" id="p-resume">Seguir jugando</button>
+          <button class="mi" id="p-lamp">Volver a la última farola</button>
+          <button class="mi" id="p-album">Álbum de postales</button>
+          <button class="mi" id="p-options">Opciones</button>
+          <button class="mi" id="p-title">Salir al inicio</button>
+        </nav>
+        <p id="pause-keys" class="sub small"></p>
+      </section>
+
+      <section id="m-install" class="screen panel narrow" hidden>
+        <h2>Instalar el juego</h2>
+        <p id="install-text" class="sub"></p>
+        <button class="mi wide" id="b-install-back">Entendido</button>
+      </section>
+
+      <section id="m-end" class="screen panel narrow end" hidden>
+        <h2>Fin</h2>
+        <p class="sub">La última farola</p>
+        <p class="credits">Historia, diseño y programación: UniversoApps<br>Música: «La canción de Alba», vals original</p>
+        <p id="end-cards" class="sub"></p>
+        <nav class="list">
+          <button class="mi" id="e-album">Ver el álbum</button>
+          <button class="mi" id="e-title">Volver al inicio</button>
+        </nav>
+      </section>
+    </div>
+  </div>
+
+  <div id="touch" hidden>
+    <div id="stick-zone"></div>
+    <div id="stick-ghost" aria-hidden="true"></div>
+    <div id="stick-base"><div id="stick-knob"></div></div>
+    <button class="tbtn" id="t-dash" data-act="dash" aria-label="Impulso"><span class="ic">»</span><span class="lb">Impulso</span></button>
+    <button class="tbtn" id="t-spark" data-act="spark" aria-label="Chispa"><span class="ic">✦</span><span class="lb">Chispa</span></button>
+    <button class="tbtn" id="t-jump" data-act="jump" aria-label="Saltar"><span class="ic">▲</span><span class="lb">Saltar</span></button>
+    <button id="t-pause" aria-label="Pausa">❚❚</button>
+  </div>
+
+  <div id="rotate" hidden>
+    <div class="phone" aria-hidden="true"></div>
+    <p>Girá el teléfono para jugar</p>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="art.js"></script>
+<script src="audio.js"></script>
+<script src="input.js"></script>
+<script src="game.js"></script>
+<script src="ui.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
