@@ -67,7 +67,7 @@
 
     // app instalable y sin conexión
     if ('serviceWorker' in navigator && location.protocol === 'https:') {
-      try { navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (e) {}
+      try { navigator.serviceWorker.register('../sw.js').catch(() => {}); } catch (e) {}
     }
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
