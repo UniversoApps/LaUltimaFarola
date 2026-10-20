@@ -1,0 +1,19 @@
+{
+  "name": "La última farola",
+  "short_name": "Última farola",
+  "description": "Un juego de plataformas sobre una niña, su abuela y una ciudad que se apaga.",
+  "lang": "es",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "background_color": "#05071a",
+  "theme_color": "#05071a",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "LaUltimaFarola/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "LaUltimaFarola/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "LaUltimaFarola/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
