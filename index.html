@@ -9,6 +9,11 @@
 <meta property="og:title" content="La última farola">
 <meta property="og:description" content="Una ciudad se apaga. Tu abuela olvida. Vos tenés el farol.">
 <meta property="og:image" content="LaUltimaFarola/icon-512.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="La última farola">
 <link rel="icon" type="image/png" href="LaUltimaFarola/icon-192.png">
 <link rel="apple-touch-icon" href="LaUltimaFarola/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -373,6 +378,9 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { const i = [...acts].indexOf(e.target); setTimeout(() => e.target.classList.add('lit'), i * 260); io.unobserve(e.target); } }), { threshold: 0.4 });
     acts.forEach(a => io.observe(a));
   } else acts.forEach(a => a.classList.add('lit'));
+
+  // app instalable: la portada es la pantalla de inicio
+  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 })();
 </script>
 </body>
